@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casbernet E.I.R.L. — Software Empresarial & IA Factory</title>
+<meta name="description" content="Casbernet E.I.R.L. diseña y construye software empresarial, plataformas SaaS y agentes de inteligencia artificial bajo arquitecturas que tu empresa puede escalar y gobernar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:#0B0F1A;
+    --bg-surface:#121A2B;
+    --bg-surface-2:#1A2438;
+    --bg-surface-3:#212C45;
+    --line:rgba(255,255,255,0.09);
+    --line-strong:rgba(255,255,255,0.16);
+    --cobalt:#4C6FFF;
+    --cobalt-soft:rgba(76,111,255,0.14);
+    --amber:#E8A33D;
+    --amber-soft:rgba(232,163,61,0.14);
+    --text-1:#EDEFF5;
+    --text-2:#9AA2B8;
+    --text-3:#6B7390;
+    --radius:14px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'IBM Plex Sans',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+    --maxw:1180px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-base);
+    color:var(--text-1);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    pointer-events:none;
+    z-index:0;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.05) 70%, transparent 100%);
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+  ::selection{background:var(--cobalt);color:#fff;}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cobalt);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:"//";color:var(--text-3);}
+  .eyebrow.amber{color:var(--amber);}
+
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-0.01em;color:var(--text-1);}
+  h2{font-size:clamp(28px,3.6vw,42px);line-height:1.15;margin-bottom:18px;}
+  h3{font-size:20px;margin-bottom:10px;}
+  p{color:var(--text-2);}
+  .section-head{max-width:680px;margin-bottom:56px;}
+  .section-head p{font-size:17px;color:var(--text-2);}
+  section{position:relative;padding:108px 0;border-bottom:1px solid var(--line);}
+  section.tight{padding:88px 0;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(11,15,26,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:0 32px;
+    height:74px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:0.01em;}
+  .logo .mark{
+    width:30px;height:30px;border:1.5px solid var(--cobalt);border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:13px;color:var(--cobalt);
+    position:relative;
+  }
+  .logo .mark::after{
+    content:"";position:absolute;width:6px;height:6px;background:var(--amber);border-radius:50%;
+    top:-3px;right:-3px;
+  }
+  .logo small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:0.08em;color:var(--text-3);margin-top:-2px;}
+  nav.links{display:flex;align-items:center;gap:34px;}
+  nav.links a{font-size:14.5px;color:var(--text-2);transition:color .2s;position:relative;}
+  nav.links a:hover{color:var(--text-1);}
+  .btn{
+    font-family:var(--body);font-weight:600;font-size:14px;
+    padding:11px 22px;border-radius:9px;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s, background .2s, border-color .2s;
+    cursor:pointer;border:1px solid transparent;
+  }
+  .btn-primary{background:var(--cobalt);color:#fff;}
+  .btn-primary:hover{transform:translateY(-2px);background:#5d7dff;}
+  .btn-ghost{border-color:var(--line-strong);color:var(--text-1);background:transparent;}
+  .btn-ghost:hover{border-color:var(--cobalt);color:var(--cobalt);}
+  .btn-amber{background:var(--amber);color:#1a1304;}
+  .btn-amber:hover{transform:translateY(-2px);background:#f0b454;}
+  .nav-cta{display:none;}
+  .burger{display:none;}
+
+  @media (max-width:880px){
+    nav.links{position:fixed;top:74px;left:0;right:0;background:var(--bg-base);border-bottom:1px solid var(--line);
+      flex-direction:column;align-items:flex-start;gap:0;padding:8px 32px 20px;transform:translateY(-12px);opacity:0;
+      pointer-events:none;transition:opacity .2s, transform .2s;}
+    nav.links.open{opacity:1;transform:translateY(0);pointer-events:auto;}
+    nav.links a{padding:13px 0;width:100%;border-bottom:1px solid var(--line);}
+    nav.links .nav-cta{display:flex;margin-top:14px;}
+    .burger{display:flex;flex-direction:column;gap:5px;width:26px;cursor:pointer;background:none;border:none;padding:6px;}
+    .burger span{height:2px;background:var(--text-1);border-radius:2px;}
+    .nav-inner .btn-primary{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:172px 0 100px;border-bottom:1px solid var(--line);overflow:hidden;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:60px;align-items:center;}
+  .hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.08;margin-bottom:22px;}
+  .hero h1 .accent{color:var(--cobalt);}
+  .hero p.lead{font-size:18px;color:var(--text-2);max-width:520px;margin-bottom:34px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:46px;}
+  .hero-caps{display:flex;gap:28px;flex-wrap:wrap;}
+  .hero-caps span{
+    font-family:var(--mono);font-size:12px;color:var(--text-3);letter-spacing:0.04em;
+    display:flex;align-items:center;gap:8px;
+  }
+  .hero-caps span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cobalt);}
+
+  .hero-diagram{position:relative;height:440px;}
+  .hero-diagram svg{width:100%;height:100%;}
+  .node-label{font-family:var(--mono);font-size:11px;fill:var(--text-2);}
+  .core-label{font-family:var(--mono);font-size:12px;fill:var(--text-1);font-weight:500;}
+  .conn-line{stroke:var(--cobalt);stroke-width:1.4;fill:none;stroke-dasharray:5 6;opacity:0.55;}
+  .conn-line.amber{stroke:var(--amber);}
+  .node-dot{fill:var(--bg-surface);stroke:var(--line-strong);stroke-width:1.4;}
+  .node-dot.core{fill:var(--cobalt-soft);stroke:var(--cobalt);}
+  .pulse{animation:pulseDash 7s linear infinite;}
+  @keyframes pulseDash{to{stroke-dashoffset:-200;}}
+  .breathe{animation:breathe 4.5s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{opacity:0.5;}50%{opacity:1;}}
+
+  @media (max-width:880px){
+    .hero{padding:148px 0 70px;}
+    .hero-grid{grid-template-columns:1fr;gap:48px;}
+    .hero-diagram{height:340px;}
+  }
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;gap:22px;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:980px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:620px){.grid-3,.grid-4,.grid-2{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;position:relative;transition:border-color .2s, transform .2s;
+  }
+  .card:hover{border-color:var(--line-strong);transform:translateY(-3px);}
+  .card .icon{
+    width:42px;height:42px;border-radius:9px;background:var(--cobalt-soft);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .card .icon svg{width:21px;height:21px;}
+  .card p{font-size:14.5px;}
+  .card-link{font-family:var(--mono);font-size:12px;color:var(--cobalt);margin-top:16px;display:inline-block;}
+
+  .corner{position:absolute;width:14px;height:14px;border:1.4px solid var(--line-strong);opacity:0.7;}
+  .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;border-top-left-radius:6px;}
+  .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;border-bottom-right-radius:6px;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- SERVICIOS ---------- */
+  #servicios{background:var(--bg-base);}
+
+  /* ---------- IA ---------- */
+  #ia{background:linear-gradient(180deg, var(--bg-base), var(--bg-surface) 120%);}
+  .ia-list{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px;}
+  @media (max-width:980px){.ia-list{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:620px){.ia-list{grid-template-columns:1fr;}}
+  .ia-tag{
+    border:1px solid var(--line);border-radius:11px;padding:20px 18px;background:var(--bg-surface);
+  }
+  .ia-tag h4{font-family:var(--body);font-weight:600;font-size:15px;margin-bottom:6px;color:var(--text-1);}
+  .ia-tag p{font-size:13.5px;margin:0;}
+
+  /* ---------- IA FACTORY ---------- */
+  #ia-factory{background:var(--bg-base);}
+  #ia-factory .section-head{max-width:760px;}
+  .pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:20px;}
+  @media (max-width:1000px){.pipeline{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:620px){.pipeline{grid-template-columns:1fr;}}
+  .step{
+    border:1px solid var(--line);border-radius:12px;padding:22px 16px;background:var(--bg-surface);
+    position:relative;
+  }
+  .step .num{font-family:var(--mono);font-size:12px;color:var(--amber);display:block;margin-bottom:10px;}
+  .step h4{font-family:var(--body);font-weight:600;font-size:14.5px;margin-bottom:8px;}
+  .step p{font-size:13px;margin:0;}
+  .pipeline-arrow{display:none;}
+
+  /* ---------- METODOLOGÍA ---------- */
+  #metodologia{background:var(--bg-base);}
+  .meth-row{display:flex;flex-direction:column;gap:0;margin-top:10px;}
+  .meth-item{display:grid;grid-template-columns:90px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line);}
+  .meth-item:last-child{border-bottom:none;}
+  .meth-item .num{font-family:var(--mono);color:var(--cobalt);font-size:26px;}
+  .meth-item h4{margin-bottom:6px;}
+  .meth-item p{font-size:14.5px;max-width:620px;}
+  @media (max-width:620px){.meth-item{grid-template-columns:50px 1fr;}}
+
+  /* ---------- CASOS ---------- */
+  #casos{background:linear-gradient(180deg,var(--bg-surface) -20%, var(--bg-base) 100%);}
+  .sector-card{padding:28px 26px;}
+  .sector-card .tag{font-family:var(--mono);font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;display:block;}
+  .disclaimer{font-size:12.5px;color:var(--text-3);margin-top:26px;font-style:italic;}
+
+  /* ---------- TECNOLOGÍAS ---------- */
+  #tecnologias{background:var(--bg-base);}
+  .tech-group{margin-bottom:30px;}
+  .tech-group h4{font-family:var(--mono);font-size:12.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:400;margin-bottom:14px;}
+  .tech-badges{display:flex;flex-wrap:wrap;gap:10px;}
+  .badge{
+    font-family:var(--mono);font-size:13px;color:var(--text-1);
+    border:1px solid var(--line-strong);border-radius:8px;padding:8px 14px;background:var(--bg-surface);
+  }
+
+  /* ---------- NOSOTROS ---------- */
+  #nosotros{background:var(--bg-base);}
+  .nosotros-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:start;}
+  @media (max-width:880px){.nosotros-grid{grid-template-columns:1fr;gap:40px;}}
+  .pillars{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:560px){.pillars{grid-template-columns:1fr;}}
+  .pillar h4{font-size:15.5px;margin-bottom:6px;}
+  .pillar p{font-size:13.5px;}
+  .pillar .icon{width:36px;height:36px;border-radius:8px;background:var(--amber-soft);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .pillar .icon svg{width:18px;height:18px;}
+
+  /* ---------- FAQ ---------- */
+  #faq{background:var(--bg-base);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:24px 0;cursor:pointer;font-family:var(--display);font-weight:600;font-size:16.5px;
+    background:none;border:none;color:var(--text-1);width:100%;text-align:left;
+  }
+  .faq-q .plus{font-family:var(--mono);color:var(--cobalt);font-size:20px;transition:transform .25s;flex-shrink:0;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-a p{padding-bottom:22px;font-size:14.5px;max-width:680px;}
+
+  /* ---------- CONTACTO ---------- */
+  #contacto{background:var(--bg-surface);border-bottom:none;}
+  .contact-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;}
+  @media (max-width:880px){.contact-grid{grid-template-columns:1fr;gap:44px;}}
+  .contact-info p{font-size:15px;margin-bottom:26px;max-width:380px;}
+  .contact-line{display:flex;flex-direction:column;gap:18px;margin-top:8px;}
+  .contact-line div{font-family:var(--mono);font-size:13.5px;}
+  .contact-line span{display:block;color:var(--text-3);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+
+  form{display:grid;gap:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:560px){.form-row{grid-template-columns:1fr;}}
+  label{font-size:12.5px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;display:block;}
+  input,select,textarea{
+    width:100%;background:var(--bg-base);border:1px solid var(--line-strong);border-radius:9px;
+    padding:13px 14px;color:var(--text-1);font-family:var(--body);font-size:14.5px;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--cobalt);outline:none;}
+  textarea{resize:vertical;min-height:100px;}
+  .form-success{display:none;background:var(--cobalt-soft);border:1px solid var(--cobalt);border-radius:10px;padding:18px;font-size:14px;color:var(--text-1);}
+  .form-success.show{display:block;}
+  form.hide{display:none;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:60px 0 36px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px;}
+  @media (max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+  footer h5{font-family:var(--mono);font-size:11.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:16px;font-weight:400;}
+  footer .col a, footer .col p{display:block;font-size:14px;color:var(--text-2);margin-bottom:10px;}
+  footer .col a:hover{color:var(--text-1);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text-3);flex-wrap:wrap;gap:14px;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#inicio" class="logo">
+      <span class="mark">CB</span>
+      <span>CASBERNET<small>E.I.R.L. — SOFTWARE & IA</small></span>
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#servicios">Servicios</a>
+      <a href="#ia">Inteligencia Artificial</a>
+      <a href="#ia-factory">IA Factory</a>
+      <a href="#casos">Casos de uso</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto" class="btn btn-primary nav-cta">Agendar diagnóstico</a>
+    </nav>
+    <a href="#contacto" class="btn btn-primary">Agendar diagnóstico</a>
+    <button class="burger" id="burger" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Ingeniería de software + IA Factory</div>
+        <h1>Diseñamos y construimos los sistemas que tu empresa necesita para crecer con <span class="accent">inteligencia artificial</span>.</h1>
+        <p class="lead">Casbernet E.I.R.L. desarrolla software empresarial, plataformas SaaS y agentes de inteligencia artificial — y los integra bajo una arquitectura que tu equipo puede entender, escalar y gobernar en el tiempo.</p>
+        <div class="hero-ctas">
+          <a href="#contacto" class="btn btn-primary">Iniciar un proyecto</a>
+          <a href="#metodologia" class="btn btn-ghost">Ver cómo trabajamos</a>
+        </div>
+        <div class="hero-caps">
+          <span>Arquitecturas escalables</span>
+          <span>Gobierno de IA</span>
+          <span>Automatización de procesos</span>
+        </div>
+      </div>
+
+      <div class="hero-diagram">
+        <svg viewBox="0 0 460 440" fill="none">
+          <!-- connections -->
+          <path class="conn-line pulse" d="M230 220 L100 90"></path>
+          <path class="conn-line pulse" d="M230 220 L360 90"></path>
+          <path class="conn-line pulse amber" d="M230 220 L80 250"></path>
+          <path class="conn-line pulse" d="M230 220 L380 260"></path>
+          <path class="conn-line pulse amber" d="M230 220 L230 380"></path>
+
+          <!-- outer nodes -->
+          <g>
+            <circle class="node-dot" cx="100" cy="90" r="34"></circle>
+            <text class="node-label" x="100" y="86" text-anchor="middle">Web</text>
+            <text class="node-label" x="100" y="100" text-anchor="middle">App</text>
+          </g>
+          <g>
+            <circle class="node-dot" cx="360" cy="90" r="34"></circle>
+            <text class="node-label" x="360" y="86" text-anchor="middle">Mobile</text>
+            <text class="node-label" x="360" y="100" text-anchor="middle">iOS/And</text>
+          </g>
+          <g>
+            <circle class="node-dot" cx="80" cy="250" r="34"></circle>
+            <text class="node-label" x="80" y="246" text-anchor="middle">Agentes</text>
+            <text class="node-label" x="80" y="260" text-anchor="middle">IA</text>
+          </g>
+          <g>
+            <circle class="node-dot" cx="380" cy="260" r="34"></circle>
+            <text class="node-label" x="380" y="256" text-anchor="middle">SaaS</text>
+            <text class="node-label" x="380" y="270" text-anchor="middle">Platform</text>
+          </g>
+          <g>
+            <circle class="node-dot" cx="230" cy="380" r="34"></circle>
+            <text class="node-label" x="230" y="376" text-anchor="middle">Cloud &amp;</text>
+            <text class="node-label" x="230" y="390" text-anchor="middle">Datos</text>
+          </g>
+
+          <!-- core -->
+          <circle class="node-dot core breathe" cx="230" cy="220" r="52"></circle>
+          <text class="core-label" x="230" y="216" text-anchor="middle">CASBERNET</text>
+          <text class="node-label" x="230" y="232" text-anchor="middle">CORE</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Servicios</div>
+        <h2>Software empresarial diseñado para escalar</h2>
+        <p>Desde un portal interno hasta una plataforma SaaS multi-tenant: cada sistema que entregamos está pensado para crecer con tu negocio, no para reemplazarse en dos años.</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <div class="corner tl"></div><div class="corner br"></div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C6FFF" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div>
+          <h3>Aplicaciones Web</h3>
+          <p>Sistemas web a medida para procesos críticos: portales internos, plataformas orientadas a cliente y herramientas operativas conectadas a tus datos.</p>
+        </div>
+        <div class="card reveal">
+          <div class="corner tl"></div><div class="corner br"></div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C6FFF" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+          <h3>Apps Móviles iOS y Android</h3>
+          <p>Aplicaciones nativas e híbridas que extienden tu operación al móvil, integradas con tus sistemas empresariales y servicios en la nube.</p>
+        </div>
+        <div class="card reveal">
+          <div class="corner tl"></div><div class="corner br"></div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C6FFF" stroke-width="1.6"><path d="M4 7l8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7"/></svg></div>
+          <h3>Plataformas SaaS</h3>
+          <p>Productos multi-tenant listos para escalar: arquitectura de suscripción, facturación, paneles de administración y control de acceso por cliente.</p>
+        </div>
+        <div class="card reveal">
+          <div class="corner tl"></div><div class="corner br"></div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C6FFF" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0114 0M3 12a9 9 0 0118 0"/></svg></div>
+          <h3>Integración de Sistemas y Cloud</h3>
+          <p>Conectamos tus sistemas existentes entre sí y migramos cargas críticas a infraestructura cloud segura, sin interrumpir tu operación diaria.</p>
+        </div>
+        <div class="card reveal">
+          <div class="corner tl"></div><div class="corner br"></div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C6FFF" stroke-width="1.6"><path d="M3 12h6l2-4 4 8 2-4h4"/></svg></div>
+          <h3>Automatización de Procesos</h3>
+          <p>Flujos de trabajo automatizados que eliminan tareas manuales repetitivas y reducen errores en procesos administrativos y operativos.</p>
+        </div>
+        <div class="card reveal">
+          <div class="corner tl"></div><div class="corner br"></div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C6FFF" stroke-width="1.6"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2M6 6l2 2M18 6l-2 2M6 18l2-2M18 18l-2-2"/><circle cx="12" cy="12" r="4"/></svg></div>
+          <h3>Modernización de Aplicaciones</h3>
+          <p>Renovamos sistemas legados: nueva arquitectura, mejor rendimiento y una base de código que tu equipo puede mantener.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTELIGENCIA ARTIFICIAL -->
+  <section id="ia">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Inteligencia Artificial</div>
+        <h2>Agentes inteligentes que trabajan dentro de tu operación</h2>
+        <p>Diseñamos e integramos agentes de IA generativa y modelos de lenguaje (LLM) directamente en tus procesos de negocio: atención al cliente, ventas, gestión documental y análisis de información.</p>
+      </div>
+
+      <div class="ia-list">
+        <div class="ia-tag reveal"><h4>Agentes Empresariales</h4><p>Asistentes autónomos que ejecutan tareas y consultan tus sistemas internos.</p></div>
+        <div class="ia-tag reveal"><h4>Chatbots con IA Generativa</h4><p>Conversación natural entrenada con el conocimiento real de tu empresa.</p></div>
+        <div class="ia-tag reveal"><h4>Asistentes Virtuales</h4><p>Apoyo a equipos internos en tareas repetitivas y consultas frecuentes.</p></div>
+        <div class="ia-tag reveal"><h4>Atención al Cliente</h4><p>Respuesta inmediata 24/7 con escalamiento a un humano cuando se necesita.</p></div>
+        <div class="ia-tag reveal"><h4>Ventas y Marketing</h4><p>Calificación de leads, seguimiento automático y recomendaciones personalizadas.</p></div>
+        <div class="ia-tag reveal"><h4>Gestión Documental</h4><p>Extracción, clasificación y búsqueda inteligente sobre grandes volúmenes de documentos.</p></div>
+        <div class="ia-tag reveal"><h4>Análisis de Datos</h4><p>Agentes que convierten datos operativos en respuestas e indicadores claros.</p></div>
+        <div class="ia-tag reveal"><h4>IA para Salud</h4><p>Apoyo en triage, agendamiento y gestión de información clínica no diagnóstica.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IA FACTORY -->
+  <section id="ia-factory">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow amber">IA Factory</div>
+        <h2>Industrializamos el ciclo de vida de tus soluciones de IA</h2>
+        <p>No basta con construir un agente: hay que diseñarlo, desplegarlo, monitorearlo y gobernarlo. Nuestro enfoque de IA Factory aplica MLOps, AIOps y gobierno de IA para que cada solución sea segura, medible y escalable dentro de tu organización.</p>
+      </div>
+
+      <div class="pipeline">
+        <div class="step reveal"><span class="num">01</span><h4>Estrategia de Adopción</h4><p>Definimos casos de uso priorizados según impacto y viabilidad.</p></div>
+        <div class="step reveal"><span class="num">02</span><h4>Diseño de Arquitectura</h4><p>Arquitectura empresarial para IA: datos, modelos e integraciones.</p></div>
+        <div class="step reveal"><span class="num">03</span><h4>Desarrollo e Integración de LLMs</h4><p>Construcción de agentes y conexión con modelos de lenguaje.</p></div>
+        <div class="step reveal"><span class="num">04</span><h4>Despliegue</h4><p>Puesta en producción con control de versiones y entornos seguros.</p></div>
+        <div class="step reveal"><span class="num">05</span><h4>Monitoreo y Observabilidad</h4><p>Métricas de uso, calidad de respuestas y detección de fallos.</p></div>
+        <div class="step reveal"><span class="num">06</span><h4>Gobierno y Seguridad</h4><p>Políticas de uso, control de acceso y cumplimiento normativo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METODOLOGÍA -->
+  <section id="metodologia">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Metodología</div>
+        <h2>Cómo trabajamos</h2>
+        <p>Un proceso ágil y transparente, con entregas visibles desde las primeras semanas del proyecto.</p>
+      </div>
+
+      <div class="meth-row">
+        <div class="meth-item reveal"><span class="num">01</span><div><h4>Descubrimiento</h4><p>Entendemos tu proceso de negocio, tus sistemas actuales y los resultados que necesitas.</p></div></div>
+        <div class="meth-item reveal"><span class="num">02</span><div><h4>Diseño de Solución</h4><p>Arquitectura técnica, alcance funcional y diseño UX/UI antes de escribir una sola línea de código.</p></div></div>
+        <div class="meth-item reveal"><span class="num">03</span><div><h4>Desarrollo Ágil</h4><p>Ciclos cortos con entregas incrementales y revisión constante contigo.</p></div></div>
+        <div class="meth-item reveal"><span class="num">04</span><div><h4>Despliegue</h4><p>Puesta en producción acompañada, con pruebas y planes de contingencia.</p></div></div>
+        <div class="meth-item reveal"><span class="num">05</span><div><h4>Soporte y Evolución</h4><p>Mantenimiento, monitoreo y nuevas funcionalidades a medida que tu negocio crece.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASOS DE USO -->
+  <section id="casos">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Casos de uso</div>
+        <h2>Dónde generamos impacto</h2>
+        <p>Algunos escenarios típicos de cómo nuestras soluciones de software e IA se aplican según el sector.</p>
+      </div>
+
+      <div class="grid grid-4">
+        <div class="card sector-card reveal">
+          <span class="tag">Salud</span>
+          <h3>Clínicas y centros médicos</h3>
+          <p>Asistentes virtuales para agendamiento de citas, triage informativo y gestión de historiales, reduciendo carga administrativa del personal.</p>
+        </div>
+        <div class="card sector-card reveal">
+          <span class="tag">Comercio</span>
+          <h3>Retail y e-commerce</h3>
+          <p>Agentes de atención al cliente y ventas que responden consultas de catálogo, hacen seguimiento de pedidos y califican leads.</p>
+        </div>
+        <div class="card sector-card reveal">
+          <span class="tag">Industria</span>
+          <h3>Manufactura y logística</h3>
+          <p>Automatización de procesos documentales y de control de inventario, con integración a sistemas ERP existentes.</p>
+        </div>
+        <div class="card sector-card reveal">
+          <span class="tag">Startups</span>
+          <h3>Plataformas SaaS</h3>
+          <p>Diseño y desarrollo de producto desde cero, con arquitectura multi-tenant lista para escalar a nuevos mercados.</p>
+        </div>
+      </div>
+      <p class="disclaimer">* Escenarios ilustrativos basados en proyectos típicos del sector, no corresponden a clientes específicos.</p>
+    </div>
+  </section>
+
+  <!-- TECNOLOGÍAS -->
+  <section id="tecnologias">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Stack tecnológico</div>
+        <h2>Tecnología probada, sin amarres</h2>
+        <p>Elegimos la herramienta correcta para cada proyecto, no la que nos resulta más cómoda.</p>
+      </div>
+
+      <div class="tech-group reveal">
+        <h4>Frontend</h4>
+        <div class="tech-badges">
+          <span class="badge">React</span><span class="badge">Next.js</span><span class="badge">Vue</span><span class="badge">TypeScript</span>
+        </div>
+      </div>
+      <div class="tech-group reveal">
+        <h4>Backend</h4>
+        <div class="tech-badges">
+          <span class="badge">Node.js</span><span class="badge">Python</span><span class="badge">.NET</span><span class="badge">Java</span>
+        </div>
+      </div>
+      <div class="tech-group reveal">
+        <h4>Cloud &amp; DevOps</h4>
+        <div class="tech-badges">
+          <span class="badge">AWS</span><span class="badge">Azure</span><span class="badge">Google Cloud</span><span class="badge">Docker</span><span class="badge">Kubernetes</span>
+        </div>
+      </div>
+      <div class="tech-group reveal">
+        <h4>Datos &amp; IA</h4>
+        <div class="tech-badges">
+          <span class="badge">PostgreSQL</span><span class="badge">MongoDB</span><span class="badge">LangChain</span><span class="badge">Bases vectoriales</span><span class="badge">Integración LLM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <div class="wrap nosotros-grid">
+      <div class="reveal">
+        <div class="eyebrow">Nosotros</div>
+        <h2>Arquitectos de sistemas, no solo desarrolladores de software</h2>
+        <p>Casbernet E.I.R.L. nació para cerrar la brecha entre la promesa de la inteligencia artificial y su implementación real dentro de una empresa. Combinamos ingeniería de software sólida con experiencia en IA aplicada, para entregar sistemas que funcionan en producción, no solo en una demo.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8A33D" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
+          <h4>Ingeniería rigurosa</h4>
+          <p>Código mantenible, pruebas y buenas prácticas desde el primer commit.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8A33D" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+          <h4>IA aplicada con propósito</h4>
+          <p>Solo recomendamos IA donde resuelve un problema real de negocio.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8A33D" stroke-width="1.6"><path d="M4 4h16v12H4zM9 20h6M12 16v4"/></svg></div>
+          <h4>Acompañamiento end-to-end</h4>
+          <p>Desde la primera reunión hasta el soporte post-lanzamiento.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8A33D" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div>
+          <h4>Seguridad y gobierno por diseño</h4>
+          <p>Control de acceso, trazabilidad y cumplimiento desde la arquitectura.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Preguntas frecuentes</div>
+        <h2>Antes de escribirnos</h2>
+      </div>
+
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q">¿Cuánto tiempo toma un proyecto típico? <span class="plus">+</span></button>
+          <div class="faq-a"><p>Depende del alcance: un MVP web o móvil suele tomar entre 6 y 12 semanas; una plataforma SaaS o un programa de IA Factory completo puede extenderse varios meses, siempre con entregas incrementales visibles.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Trabajan con empresas pequeñas o solo grandes corporativos? <span class="plus">+</span></button>
+          <div class="faq-a"><p>Trabajamos con startups, pymes y grandes empresas. Ajustamos el alcance y la arquitectura al tamaño y madurez tecnológica de cada cliente.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Qué es exactamente "IA Factory"? <span class="plus">+</span></button>
+          <div class="faq-a"><p>Es nuestro enfoque para industrializar cómo una empresa diseña, despliega, monitorea y gobierna sus soluciones de inteligencia artificial, en lugar de tratarlas como proyectos aislados.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Cómo garantizan la seguridad de nuestros datos? <span class="plus">+</span></button>
+          <div class="faq-a"><p>Aplicamos control de acceso, cifrado de datos sensibles y políticas de gobierno de IA definidas junto contigo, alineadas a las necesidades regulatorias de tu sector.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Ofrecen soporte después del lanzamiento? <span class="plus">+</span></button>
+          <div class="faq-a"><p>Sí. Ofrecemos planes de mantenimiento, monitoreo y evolución continua del sistema una vez está en producción.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Pueden integrar IA en un sistema que ya tenemos? <span class="plus">+</span></button>
+          <div class="faq-a"><p>Sí. Una parte importante de nuestro trabajo es integrar agentes de IA y modelos de lenguaje sobre sistemas existentes, sin necesidad de reconstruirlos desde cero.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="wrap contact-grid">
+      <div class="contact-info reveal">
+        <div class="eyebrow">Contacto</div>
+        <h2>Hablemos de tu próximo sistema</h2>
+        <p>Cuéntanos qué necesitas y te contactamos para una primera conversación sin costo sobre tu proyecto.</p>
+        <div class="contact-line">
+          <div><span>Email</span>contacto@casbernet.com</div>
+          <div><span>Teléfono / WhatsApp</span>+51 953 362 753</div>
+          <div><span>Ubicación</span>Lima, Perú</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form id="leadForm">
+          <div class="form-row">
+            <div>
+              <label for="nombre">Nombre completo</label>
+              <input id="nombre" name="nombre" type="text" required>
+            </div>
+            <div>
+              <label for="empresa">Empresa</label>
+              <input id="empresa" name="empresa" type="text" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="email">Correo electrónico</label>
+              <input id="email" name="email" type="email" required>
+            </div>
+            <div>
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" name="telefono" type="tel">
+            </div>
+          </div>
+          <div>
+            <label for="servicio">Servicio de interés</label>
+            <select id="servicio" name="servicio">
+              <option>Desarrollo Web</option>
+              <option>Apps Móviles</option>
+              <option>Plataformas SaaS</option>
+              <option>Agentes de Inteligencia Artificial</option>
+              <option>IA Factory / Gobierno de IA</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div>
+            <label for="mensaje">Cuéntanos sobre tu proyecto</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-amber" style="justify-self:start;margin-top:8px;">Solicitar diagnóstico gratuito</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          Gracias — recibimos tu solicitud. Un especialista de Casbernet se pondrá en contacto contigo en menos de 24 horas hábiles.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="col">
+        <a href="#inicio" class="logo" style="margin-bottom:14px;">
+          <span class="mark">CB</span><span>CASBERNET</span>
+        </a>
+        <p style="max-width:280px;">Software empresarial, plataformas SaaS y agentes de inteligencia artificial, construidos sobre una arquitectura que escala.</p>
+      </div>
+      <div class="col">
+        <h5>Servicios</h5>
+        <a href="#servicios">Desarrollo Web</a>
+        <a href="#servicios">Apps Móviles</a>
+        <a href="#servicios">Plataformas SaaS</a>
+        <a href="#ia">Inteligencia Artificial</a>
+      </div>
+      <div class="col">
+        <h5>Empresa</h5>
+        <a href="#ia-factory">IA Factory</a>
+        <a href="#metodologia">Metodología</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#faq">Preguntas frecuentes</a>
+      </div>
+      <div class="col">
+        <h5>Contacto</h5>
+        <p>contacto@casbernet.com</p>
+        <p>+51 953 362 753</p>
+        <p>Lima, Perú</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Casbernet E.I.R.L. Todos los derechos reservados.</span>
+      <span>Diseñado para escalar.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // faq accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => { o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = null; });
+      if (!isOpen) { item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+    });
+  });
+
+  // contact form (no backend connected — replace with your endpoint)
+  const form = document.getElementById('leadForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.classList.add('hide');
+    success.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
